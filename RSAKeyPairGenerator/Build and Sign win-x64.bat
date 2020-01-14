@@ -1,0 +1,2 @@
+dotnet publish --configuration Release --verbosity normal
+"%PROGRAMFILES(x86)%\Windows Kits\10\bin\x86\signtool.exe" sign /td SHA256 /n Epiforge /tr http://timestamp.comodoca.com /a bin\Release\netcoreapp3.1\win-x64\publish\RSAKeyPairGenerator.exe

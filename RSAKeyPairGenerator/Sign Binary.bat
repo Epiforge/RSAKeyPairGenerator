@@ -1,1 +1,0 @@
-"%PROGRAMFILES(x86)%\Windows Kits\10\bin\x86\signtool.exe" sign /td SHA256 /n Epiforge /tr http://timestamp.comodoca.com /a bin\Release\netcoreapp3.1\publish\RSAKeyPairGenerator.exe
