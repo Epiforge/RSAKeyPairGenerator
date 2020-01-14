@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <Company>Epiforge Software, LLC</Company>
+    <Company>Epiforge</Company>
     <Copyright>Copyright 2020 by Epiforge Software, LLC</Copyright>
     <Description>Generates public/private key pairs using the RSA algorithm in .NET</Description>
     <Product>RSA Key Pair Generator</Product>
