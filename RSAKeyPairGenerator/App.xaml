@@ -1,0 +1,32 @@
+﻿<Application x:Class="RSAKeyPairGenerator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vc="clr-namespace:RSAKeyPairGenerator.ValueConverters"
+             
+             StartupUri="MainWindow.xaml"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <vc:BytesToCSharpValueConverter x:Key="BytesToCSharpValueConverter" />
+            <vc:BytesToHexValueConverter x:Key="BytesToHexValueConverter" />
+            <vc:EqualityToVisibilityValueConverter x:Key="EqualityToVisibilityValueConverter" />
+
+            <Style x:Key="MaterialWindow" TargetType="Window">
+                <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+                <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
+                <Setter Property="TextElement.FontSize" Value="13" />
+                <Setter Property="TextElement.FontWeight" Value="Regular" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MaterialDesignBody}" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

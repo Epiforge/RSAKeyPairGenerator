@@ -1,0 +1,98 @@
+﻿<Window x:Class="RSAKeyPairGenerator.MainWindow"
+        
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RSAKeyPairGenerator"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+        Height="600"
+        Style="{StaticResource MaterialWindow}"
+        Title="RSA Key Pair Generator"
+        Width="800"
+        
+        mc:Ignorable="d"
+        >
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewExecuted" />
+        <CommandBinding Command="ApplicationCommands.Copy" CanExecute="CopyCanExecute" Executed="CopyExecuted" />
+    </Window.CommandBindings>
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" SelectedItem="{Binding DisplayMode, Mode=TwoWay}">
+            <ComboBox.Items>
+                <local:DisplayMode>Hex</local:DisplayMode>
+                <local:DisplayMode>CSharp</local:DisplayMode>
+            </ComboBox.Items>
+        </ComboBox>
+        <Button Grid.Column="2" Command="ApplicationCommands.New" HorizontalAlignment="Center">Generate Key Pair</Button>
+        <GroupBox Grid.Row="2" Grid.ColumnSpan="3" Header="Public Key" Style="{StaticResource MaterialDesignCardGroupBox}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="8" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding PublicKey, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
+                            <Binding.ConverterParameter>
+                                <local:DisplayMode>Hex</local:DisplayMode>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PublicKey, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
+                            <Binding.ConverterParameter>
+                                <local:DisplayMode>CSharp</local:DisplayMode>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <Button Grid.Row="2" HorizontalAlignment="Right" Command="ApplicationCommands.Copy" CommandParameter="PublicKey">Copy Public Key</Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="4" Grid.ColumnSpan="3" Header="Private Key" Style="{StaticResource MaterialDesignCardGroupBox}" md:ColorZoneAssist.Mode="Accent">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="8" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding PrivateKey, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
+                            <Binding.ConverterParameter>
+                                <local:DisplayMode>Hex</local:DisplayMode>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PrivateKey, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
+                            <Binding.ConverterParameter>
+                                <local:DisplayMode>CSharp</local:DisplayMode>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <Button Grid.Row="2" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="ApplicationCommands.Copy" CommandParameter="PrivateKey">Copy Private Key</Button>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
