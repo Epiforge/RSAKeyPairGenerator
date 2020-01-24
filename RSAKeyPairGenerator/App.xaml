@@ -14,9 +14,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <vc:AllBooleanToVisibilityMultiValueConverter x:Key="AllBooleanToVisibilityMultiValueConverter" />
             <vc:BytesToCSharpValueConverter x:Key="BytesToCSharpValueConverter" />
             <vc:BytesToHexValueConverter x:Key="BytesToHexValueConverter" />
-            <vc:EqualityToVisibilityValueConverter x:Key="EqualityToVisibilityValueConverter" />
+            <vc:EqualityToBooleanValueConverter x:Key="EqualityToBooleanValueConverter" />
 
             <Style x:Key="MaterialWindow" TargetType="Window">
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />

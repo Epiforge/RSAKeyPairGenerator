@@ -31,12 +31,20 @@
             <RowDefinition Height="8" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" SelectedItem="{Binding DisplayMode, Mode=TwoWay}">
-            <ComboBox.Items>
-                <local:DisplayMode>Hex</local:DisplayMode>
-                <local:DisplayMode>CSharp</local:DisplayMode>
-            </ComboBox.Items>
-        </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <ComboBox SelectedItem="{Binding DisplayMode, Mode=TwoWay}">
+                <ComboBox.Items>
+                    <local:DisplayMode>Hex</local:DisplayMode>
+                    <local:DisplayMode>CSharp</local:DisplayMode>
+                </ComboBox.Items>
+            </ComboBox>
+            <ComboBox Margin="8,0,0,0" SelectedItem="{Binding KeyMode, Mode=TwoWay}">
+                <ComboBox.Items>
+                    <local:KeyMode>Raw</local:KeyMode>
+                    <local:KeyMode>CspBlob</local:KeyMode>
+                </ComboBox.Items>
+            </ComboBox>
+        </StackPanel>
         <Button Grid.Column="2" Command="ApplicationCommands.New" HorizontalAlignment="Center">Generate Key Pair</Button>
         <GroupBox Grid.Row="2" Grid.ColumnSpan="3" Header="Public Key" Style="{StaticResource MaterialDesignCardGroupBox}">
             <Grid>
@@ -47,20 +55,66 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding PublicKey, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
                     <TextBlock.Visibility>
-                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
-                            <Binding.ConverterParameter>
-                                <local:DisplayMode>Hex</local:DisplayMode>
-                            </Binding.ConverterParameter>
-                        </Binding>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>Hex</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>Raw</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
                     </TextBlock.Visibility>
                 </TextBlock>
                 <TextBlock Text="{Binding PublicKey, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
                     <TextBlock.Visibility>
-                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
-                            <Binding.ConverterParameter>
-                                <local:DisplayMode>CSharp</local:DisplayMode>
-                            </Binding.ConverterParameter>
-                        </Binding>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>CSharp</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>Raw</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PublicCspBlob, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>Hex</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>CspBlob</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PublicCspBlob, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>CSharp</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>CspBlob</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
                     </TextBlock.Visibility>
                 </TextBlock>
                 <Button Grid.Row="2" HorizontalAlignment="Right" Command="ApplicationCommands.Copy" CommandParameter="PublicKey">Copy Public Key</Button>
@@ -75,20 +129,66 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding PrivateKey, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
                     <TextBlock.Visibility>
-                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
-                            <Binding.ConverterParameter>
-                                <local:DisplayMode>Hex</local:DisplayMode>
-                            </Binding.ConverterParameter>
-                        </Binding>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>Hex</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>Raw</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
                     </TextBlock.Visibility>
                 </TextBlock>
                 <TextBlock Text="{Binding PrivateKey, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
                     <TextBlock.Visibility>
-                        <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToVisibilityValueConverter}">
-                            <Binding.ConverterParameter>
-                                <local:DisplayMode>CSharp</local:DisplayMode>
-                            </Binding.ConverterParameter>
-                        </Binding>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>CSharp</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>Raw</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PrivateCspBlob, Converter={StaticResource BytesToHexValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>Hex</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>CspBlob</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
+                    </TextBlock.Visibility>
+                </TextBlock>
+                <TextBlock Text="{Binding PrivateCspBlob, Converter={StaticResource BytesToCSharpValueConverter}}" FontFamily="Courier New" TextWrapping="Wrap">
+                    <TextBlock.Visibility>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource AllBooleanToVisibilityMultiValueConverter}">
+                            <Binding Path="DisplayMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:DisplayMode>CSharp</local:DisplayMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                            <Binding Path="KeyMode" Mode="OneWay" Converter="{StaticResource EqualityToBooleanValueConverter}">
+                                <Binding.ConverterParameter>
+                                    <local:KeyMode>CspBlob</local:KeyMode>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </MultiBinding>
                     </TextBlock.Visibility>
                 </TextBlock>
                 <Button Grid.Row="2" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="ApplicationCommands.Copy" CommandParameter="PrivateKey">Copy Private Key</Button>
